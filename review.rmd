@@ -1,0 +1,95 @@
+---
+title: "gg"
+output: html_document
+---
+
+```{r}
+setwd("C:/Users/ktm/Desktop/project/Bike_sharing")
+bike <- read.csv("train.csv")
+
+str(bike)
+```
+
+```{r}
+hol <- as.factor(bike$holiday)
+coplot(bike$count~bike$registered | hol)
+
+
+# 
+cols <- terrain.colors(462)
+seas <- as.factor(bike$season)
+coplot(bike$count~bike$temp | seas,
+       col = cols[seas])
+```
+
+
+```{r}
+# season 별 count 
+library(ggplot2)
+ss <- names(seas("spring", "summer", "fall", "winter"))
+s <- ggplot(data= bike, aes(x=seas, y = count)) +
+  geom_bar(stat="identity", fill="steelblue")
+s
+```
+
+## GG
+```{r}
+g <-rnorm(100, mean = 1, sd = 0.3)
+k <-rnorm(100, sd = 0.3)
+matrix(g, ncol = 2)
+```
+
+```{r}
+x <-rbind(matrix(g, ncol = 2), matrix(k, ncol=2))
+```
+
+```{r}
+# k means 는 거리를 통해서 나누어 준 이후 중심을 찾음
+cl <- kmeans(x, centers = 2, iter.max = 20)
+plot(x, col=cl$cluster)
+```
+
+```{r}
+# 각 값은 200개로 지정
+# mean = 5 
+# sd = 0.5
+# mean = 3
+# sd = 0.3
+# 그룹 3개로 만들기
+
+g1 <- rnorm(200, mean = 5, sd = 0.5)
+g2 <- rnorm(200, mean = 3, sd = 0.3)
+
+x1 <- rbind(matrix(g1, ncol=2), matrix(g2, ncol=2))
+x1
+
+cl1 <- kmeans(x1, centers = 3, iter.max = 20)
+cl1
+plot(x1, col = cl1$cluster)
+```
+
+##### GG1
+```{r}
+library(ggplot2)
+library(ggthemes)
+```
+
+```{r}
+colnames(diamonds)
+g1 <-ggplot(diamonds, aes(x=carat, y = price, colour = clarity))
+g2 <-geom_point()
+g3 <- theme_wsj()
+g1+g2+g3
+```
+
+# x = carat, y = price, colour = cut, facet_grid = clarity
+```{r}
+ga <- ggplot(diamonds, aes(x=carat, y = price, colour = cut))
+gb <- geom_point()
+gc <- theme_wsj()
+gd <- facet_grid(.~clarity)
+ga + gb + gc + gd
+```
+
+
+
